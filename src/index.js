@@ -25,7 +25,15 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  if (!user.pro && user.todos.length === 10) {
+    return response.status(403).json({
+      error: 'The free plan allows you to create only 10!'
+    });
+  }
+
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
